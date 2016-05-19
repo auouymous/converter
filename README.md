@@ -8,5 +8,6 @@ And finally, one decorative stone #10 can be crafted back to one stone.
 This mod allows conversion recipes to be defined for such items and may optionally be set as bi-directional.
 The converter holds 8 stacks of items and a single result item.
 A single button click will convert an entire stack.
+A single unit of the result item must be crafted manually but then it is used as a template to craft more.
 
 [Youtube Video](https://www.youtube.com/watch?v=55ByB2YXSqU)
