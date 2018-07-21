@@ -9,7 +9,7 @@ local function allow_metadata_inventory_put(pos, listname, index, stack, player)
 	if minetest.is_protected(pos, player:get_player_name()) then return 0 end
 
 	local meta = minetest.get_meta(pos)
-	if meta == nil then return 0 end
+	if not meta then return 0 end
 
 	local stack_name = stack:get_name()
 
@@ -53,7 +53,8 @@ minetest.register_node("converter:converter", {
 	description = "Converter",
 	tiles = {"converter.png"},
 	sounds = default.node_sound_stone_defaults(),
-	groups = {dig_immediate=2},
+	groups = {dig_immediate = 2},
+	is_ground_content = false,
 
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -92,12 +93,19 @@ minetest.register_node("converter:converter", {
 			end
 		end
 	end,
-	on_blast = function() end,
+	on_blast = function(pos, intensity)
+		local drops = {}
+		default.get_inventory_drops(pos, "src", drops)
+		default.get_inventory_drops(pos, "dst", drops)
+		drops[#drops+1] = "converter:converter"
+		minetest.remove_node(pos)
+		return drops
+	end,
 
 	allow_metadata_inventory_put = allow_metadata_inventory_put,
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		local meta = minetest.get_meta(pos)
-		if meta == nil then return 0 end
+		if not meta then return 0 end
 
 		local inv = meta:get_inventory()
 		-- moving stuff around in the converter produces log messages identical to putting stuff in converter
@@ -130,7 +138,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if minetest.is_protected(pos, player:get_player_name()) then return end
 
 	local meta = minetest.get_meta(pos)
-	if meta == nil then return end
+	if not meta then return end
 
 	local inv = meta:get_inventory()
 
