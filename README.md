@@ -18,3 +18,5 @@ Links
 [Download](https://github.com/auouymous/converter/archive/master.zip)
 
 [Youtube Video](https://www.youtube.com/watch?v=55ByB2YXSqU)
+
+[Forum Post](https://forum.minetest.net/viewtopic.php?f=9&t=14709)
